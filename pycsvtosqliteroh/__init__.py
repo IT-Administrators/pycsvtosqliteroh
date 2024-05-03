@@ -56,15 +56,27 @@ class CsvToSqlite:
         with open(self.filename) as csvfile:
             reader = csv.DictReader(csvfile)
             return reader.fieldnames
-        
+    
+    # Count headers in csv.
     def _get_header_count(self):
-        """Counter headers."""
+        """Count headers."""
         return len(self._get_header())
+    
+    # Fetch result from sqlite query.
+    def _fetchall(self, cursor, string):
+        if isinstance(cursor,sqlite3.Cursor) and isinstance(string,str):
+            res = cursor.execute(string)
+            return res.fetchall()
+        elif type(cursor) is str and type(string) is sqlite3.Cursor:
+            res = string.execute(cursor)
+            return res.fetchall()
+        else:
+            raise TypeError
         
     # Create table from csv.
     def create_table_from_csv(self):
         """Create the table from the specified file if not exists and insert values."""
-        # Check delimiter of file. If it is not inside DEFAULTDELIMITER list raise exception.
+        # Check delimiter of file. If it is not inside __DEFAULTDELIMITER list raise Exception.
         if self._get_delimiter() not in self.__DEFAULTDELIMITER:
             raise Exception('Wrong delimiter: ' + self._get_delimiter())
         

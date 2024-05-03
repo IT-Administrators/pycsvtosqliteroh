@@ -34,7 +34,7 @@ class TestPycsvtosqliteroh(unittest.TestCase):
     def setUp(self):
         self.path = "./testfiles"
         self.file_list = get_testfiles(self.path)
-        self.database = "..//..//PyTest//Test.sqlite"
+        self.database = ".//Test.sqlite"
 
     def test_create_table_from_csv(self):
         for file in self.file_list:

@@ -5,7 +5,7 @@ import unittest
 import os
 import sqlite3
 # User defined modules.
-from pycsvtosqliteroh import CsvToSqlite
+from src.pycsvtosqliteroh import CsvToSqlite
 from addimportdir import importdir,removedir
 from pathlib import Path
 

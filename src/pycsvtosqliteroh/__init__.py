@@ -5,7 +5,9 @@ A cross plattform module to convert csv files to sqlite.
 
 Usage:
     from pycsvtosqliteroh import CsvToSqlite
+    
     # Create csv object
+    
     csvobj = CsvToSqlite("Filename", "DatabaseName")
     csvobj.create_table_from_csv()
 

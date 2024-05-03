@@ -8,7 +8,7 @@ def main():
     """Parameter declaration."""
     # Declaring parameters.
     parser = argparse.ArgumentParser()
-    arggroup = parser.add_argument_group(title="CsvTOSqlite")
+    arggroup = parser.add_argument_group(title="CsvToSqlite")
     arggroup.add_argument("-file", "--file", type=str, help=("Csv file that will be converted."))
     arggroup.add_argument("-database", "--database", type=str, help=("Sqlite tbale."))
 

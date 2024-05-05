@@ -9,6 +9,7 @@ Usage:
     # Create csv object
     
     csvobj = CsvToSqlite("Filename", "DatabaseName")
+    
     csvobj.create_table_from_csv()
 
 Returns:

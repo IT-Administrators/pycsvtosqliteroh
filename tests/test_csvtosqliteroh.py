@@ -6,6 +6,7 @@ import os
 import sqlite3
 # User defined modules.
 from src.pycsvtosqliteroh import CsvToSqlite
+from src.pycsvtosqliteroh import _Database
 from addimportdir import importdir,removedir
 from pathlib import Path
 
@@ -25,16 +26,15 @@ def filenames_no_extension(dir: str):
     filelist_no_extension = []
     for file in os.listdir(dir):
         filelist_no_extension.append(Path(file).stem)
-    
     return filelist_no_extension
 
 # Testing main functions.
 class TestPycsvtosqliteroh(unittest.TestCase):
     
     def setUp(self):
-        self.path = "./testfiles"
+        self.path = "./tests/testfiles"
         self.file_list = get_testfiles(self.path)
-        self.database = ".//Test.sqlite"
+        self.database = "./Test.sqlite"
 
     def test_create_table_from_csv(self):
         for file in self.file_list:
@@ -45,23 +45,18 @@ class TestPycsvtosqliteroh(unittest.TestCase):
         
         files = filenames_no_extension(self.path)
         # Connect to database and create cursor.
-        connection = sqlite3.connect(self.database)
-        cursor = connection.cursor()
+        with _Database(self.database) as db:
+            # Get all existing tables.
+            queryresult = db.cursor.execute("SELECT name FROM sqlite_master")
+            result = queryresult.fetchall()
 
-        # Get all existing tables.
-        queryresult = cursor.execute("SELECT name FROM sqlite_master")
-        result = queryresult.fetchall()
-        # Close cursor and connection.
-        cursor.close()
-        connection.close()
-
-        # Format result. Result is returned as a list of tuples. [(x,),(y,)]
-        # Extracting only the values.
-        resultvalues = []
-        for value in result:
-            resultvalues.append(value[0])
-        
-        self.assertEqual(files, resultvalues)
+            # Format result. Result is returned as a list of tuples. [(x,),(y,)]
+            # Extracting only the values.
+            resultvalues = []
+            for value in result:
+                resultvalues.append(value[0])
+            
+            self.assertEqual(files, resultvalues)
 
 if __name__ == '__main__':
     # Verbose unittests.

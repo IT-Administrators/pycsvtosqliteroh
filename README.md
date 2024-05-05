@@ -21,6 +21,8 @@ I've written this module to bulk convert csv files in to sqlite tables. The data
 
 At the moment only the conversion from csv to sqlite is possible. The supported delimiters for the .csv file are "," and ";". 
 
+All testfiles in the [testfiles](/tests/testfiles/) folder, are created via powershell, using the ```Export-Csv``` cmdlet with different delimiters.
+
 ## Getting started
 
 ### Prerequisites
@@ -64,13 +66,11 @@ Example 1:
 # Import module.
 from pycsvtosqliteroh import *
 # Create object and than convert to sqlite table.
-csvobj = CsvToSqlite(file, self.database)
+csvobj = CsvToSqlite(file, database)
 csvobj.create_table_from_csv()
 ```
 
 ### Using the cli
-
-You can now use the cli of the pycsvtosqliteroh module. Because of some weird issue the .main needs to be appended to the actual module name. This might be happening because of the import functionality, and is not fixed at the moment.
 
 To show the help run the following command:
 
@@ -94,7 +94,7 @@ CsvToSqlite:
 Using the conversion:
 
 ```python
-python -m pycsvtosqliteroh.main --file "Filename" --database "TestDb.sqlite"
+python -m pycsvtosqliteroh --file "Filename" --database "TestDb.sqlite"
 ```
 
 ## Releasing
@@ -111,7 +111,7 @@ git tag -a $Release -m "Version $Release"
 # Push from original.
 git push origin --tags
 # Push from fork.
- git push upstream --tags
+git push upstream --tags
 ```
 
 ## License

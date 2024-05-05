@@ -27,7 +27,7 @@ from pathlib import Path
 class CsvToSqlite:
     """Class for processing csv files."""
     
-    __DEFAULTDELIMITER = ",",";"
+    _defaultdelimiter = ",",";"
 
     # Creating constructor.  
     def __init__(self, filename: str, database: str):
@@ -63,23 +63,12 @@ class CsvToSqlite:
     def _get_header_count(self):
         """Count headers."""
         return len(self._get_header())
-    
-    # Fetch result from sqlite query.
-    def _fetchall(self, cursor, string):
-        if isinstance(cursor,sqlite3.Cursor) and isinstance(string,str):
-            res = cursor.execute(string)
-            return res.fetchall()
-        elif type(cursor) is str and type(string) is sqlite3.Cursor:
-            res = string.execute(cursor)
-            return res.fetchall()
-        else:
-            raise TypeError
         
     # Create table from csv.
     def create_table_from_csv(self):
         """Create the table from the specified file if not exists and insert values."""
-        # Check delimiter of file. If it is not inside __DEFAULTDELIMITER list raise Exception.
-        if self._get_delimiter() not in self.__DEFAULTDELIMITER:
+        # Check delimiter of file. If it is not inside _DEFAULTDELIMITER list raise Exception.
+        if self._get_delimiter() not in self._DEFAULTDELIMITER:
             raise Exception('Wrong delimiter: ' + self._get_delimiter())
         
         # Create database connection and dbcursor. 
@@ -109,6 +98,24 @@ class CsvToSqlite:
         connection.commit()
         cursor.close()
         connection.close()
+
+class _Database:
+    """Contextmanager for handling databaseconnections."""
+    def __init__(self, path: str):
+        self.path = path
+
+    def __enter__(self):
+        self.connection = sqlite3.connect(self.path)
+        self.cursor = self.connection.cursor()
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is not None:
+            print(f'an error occured: {exc_val}')
+        self.connection.close()
+
+
+
 
 # Functions/Classes that are imported by calling from <modulename> import *
 # Specifying only the class, makes all member functions available.

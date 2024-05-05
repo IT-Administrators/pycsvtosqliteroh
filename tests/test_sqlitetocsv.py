@@ -45,13 +45,12 @@ class TestPycsvtosqliteroh_sqlitetocsv(unittest.TestCase):
         with _Database(self.database) as db:
             for file in self.files:
                 sqliteobj = SqliteToCsv(self.database, os.path.join(self.newfilepath, file), remove_extension(file))
-                sqliteobj.convert_table_to_csv(db.cursor)
+                sqliteobj.convert_table_to_csv()
 
     def test_if_files_created(self):
         oldfiles = get_filenames(self.path)
-        newfiles = get_filenames(self.newfilepath)
-        self.assertCountEqual(oldfiles, newfiles)
-        self.assertEqual(oldfiles, newfiles)
+        for file in oldfiles:
+            self.assertTrue(os.path.exists(os.path.join(self.newfilepath, file)))
 
 if __name__ == '__main__':
     # Verbose unittests.

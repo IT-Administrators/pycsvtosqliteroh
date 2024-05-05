@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pycsvtosqliteroh"
 version = "0.0.1"
-description = "A python module for converting csv files to sqlite."
+description = "A python module for converting csv files to sqlite and back."
 readme = "README.md"
 requires-python = ">=3.7"
 license = {file = "LICENSE"}

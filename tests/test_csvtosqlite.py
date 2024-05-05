@@ -29,7 +29,7 @@ def filenames_no_extension(dir: str):
     return filelist_no_extension
 
 # Testing main functions.
-class TestPycsvtosqliteroh(unittest.TestCase):
+class TestPycsvtosqliteroh_csvtosqlite(unittest.TestCase):
     
     def setUp(self):
         self.path = "./tests/testfiles"

@@ -1,6 +1,6 @@
 # pycsvtosqliteroh
 
-_The pycsvtosqliteroh module is a module to convert csv to sqlite._
+_The pycsvtosqliteroh module is a module to convert csv to sqlite and back._
 
 ## Table of contents
 
@@ -17,11 +17,15 @@ _The pycsvtosqliteroh module is a module to convert csv to sqlite._
 
 ## Introduction
 
-I've written this module to bulk convert csv files in to sqlite tables. The database is used as a test database in another project.
+I've written this module to bulk convert csv files into sqlite tables. The database is used as a test database in another project.
 
-At the moment only the conversion from csv to sqlite is possible. The supported delimiters for the .csv file are "," and ";". 
+The supported delimiters for the .csv file are "," and ";". 
 
 All testfiles in the [testfiles](/tests/testfiles/) folder, are created via powershell, using the ```Export-Csv``` cmdlet with different delimiters.
+
+You can now convert csv to sqlite as well as sqlite to csv. 
+When exporting a sqlite table to .csv
+the delimiter is "," by default.
 
 ## Getting started
 
@@ -60,7 +64,7 @@ from pycsvtosqliteroh import *
 
 Depending on the way you imported the module, the following examples look a bit different.
 
-Example 1:
+Example 1: Converting csv to sqlite.
 
 ```python
 # Import module.
@@ -68,6 +72,16 @@ from pycsvtosqliteroh import *
 # Create object and than convert to sqlite table.
 csvobj = CsvToSqlite(file, database)
 csvobj.create_table_from_csv()
+```
+
+Example 2: Converting sqlite table to csv file.
+
+```python
+# Import module.
+from pycsvtosqliteroh import *
+# Create object and than convert to .csv file.
+sqliteobj = SqliteToCsv(file, database, tablename)
+sqliteobj.convert_table_to_csv()
 ```
 
 ### Using the cli
@@ -79,7 +93,7 @@ python -m pycsvtosqliteroh.main -h
 ```
 Result:
 ```
-usage: main.py [-h] [-file FILE] [-database DATABASE]  
+usage: __main__.py [-h] [-file FILE] [-db DATABASE] [-table TABLENAME]
 
 options:
   -h, --help            show this help message and exit
@@ -87,16 +101,24 @@ options:
 CsvToSqlite:
   -file FILE, --file FILE
                         Csv file that will be converted.
-  -database DATABASE, --database DATABASE
+  -db DATABASE, --database DATABASE
+                        Sqlite database.
+  -table TABLENAME, --tablename TABLENAME
                         Sqlite table.
 ```
 
 Using the conversion:
 
+Converts a .csv file to a sqlite table:
+
 ```python
 python -m pycsvtosqliteroh --file "Filename" --database "TestDb.sqlite"
 ```
 
+Converts a sqlite table to a .csv file:
+```python
+python -m pycsvtosqliteroh --file "NewFileCreated" --database "TestDb.sqlite" --table "Tablename"
+```
 ## Releasing
 
 Releases are published automatically when a tag is pushed to GitHub.

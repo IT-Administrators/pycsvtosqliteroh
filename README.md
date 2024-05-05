@@ -1,3 +1,9 @@
+![PyPI - Version](https://img.shields.io/pypi/v/pycsvtosqliteroh)
+![PyPI - License](https://img.shields.io/pypi/l/pycsvtosqliteroh)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pycsvtosqliteroh)
+[![Publish PyPi](https://github.com/IT-Administrators/pycsvtosqliteroh/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/IT-Administrators/pycsvtosqliteroh/actions/workflows/release.yml)
+[![CI](https://github.com/IT-Administrators/pycsvtosqliteroh/actions/workflows/ci.yaml/badge.svg)](https://github.com/IT-Administrators/pycsvtosqliteroh/actions/workflows/ci.yaml)
+
 # pycsvtosqliteroh
 
 _The pycsvtosqliteroh module is a module to convert csv to sqlite and back._
